@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: webserver
+  name: webserver
+  namespace: seminar
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webserver
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: webserver
+    spec:
+      containers:
+      - image: nginx:latest
+        name: nginx
+        volumeMounts:
+        - name: index-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: index-volume
+        configMap:
+          name: indexhtml
